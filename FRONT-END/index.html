@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Sistem Pengendalian Pembelian Salon</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-header">
+            <div class="logo">SP</div>
+
+            <div>
+                <h2>Salon System</h2>
+                <p>Purchase Control</p>
+            </div>
+        </div>
+
+
+        <nav class="sidebar-menu">
+
+            <p class="menu-title">MENU UTAMA</p>
+
+            <button class="menu-item active"
+                    onclick="showPage('dashboard')">
+                <span>⌂</span>
+                Dashboard
+            </button>
+
+            <button class="menu-item"
+                    onclick="showPage('bahan')">
+                <span>▣</span>
+                Data Bahan
+            </button>
+
+            <button class="menu-item"
+                    onclick="showPage('anggaran')">
+                <span>◈</span>
+                Anggaran
+            </button>
+
+            <button class="menu-item"
+                    onclick="showPage('pembelian')">
+                <span>＋</span>
+                Pembelian
+            </button>
+
+            <button class="menu-item"
+                    onclick="showPage('pengendalian')">
+                <span>◉</span>
+                Pengendalian
+            </button>
+
+            <button class="menu-item"
+                    onclick="showPage('laporan')">
+                <span>▤</span>
+                Laporan
+            </button>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
+
+        <header class="top-header">
+
+            <div>
+                <h1 id="page-title">
+                    Dashboard
+                </h1>
+
+                <p>
+                    Monitoring pembelian dan anggaran bahan habis pakai
+                </p>
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             DASHBOARD
+        ================================================== -->
+
+        <section id="dashboard" class="page active-page">
+
+            <div class="welcome-section">
+
+                <div>
+                    <h2>Sistem Pengendalian Pembelian Salon</h2>
+
+                    <p>
+                        Kelola pembelian bahan habis pakai
+                        dan pantau realisasi anggaran dengan mudah.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- SUMMARY CARDS -->
+
+            <div class="summary-grid">
+
+                <div class="summary-card pink-card">
+
+                    <div class="card-icon">
+                        B
+                    </div>
+
+                    <div>
+                        <p>Total Bahan</p>
+                        <h3 id="total-bahan">0</h3>
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card purple-card">
+
+                    <div class="card-icon">
+                        A
+                    </div>
+
+                    <div>
+                        <p>Total Anggaran</p>
+                        <h3 id="total-anggaran">
+                            Rp0
+                        </h3>
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card green-card">
+
+                    <div class="card-icon">
+                        R
+                    </div>
+
+                    <div>
+                        <p>Total Realisasi</p>
+                        <h3 id="total-realisasi">
+                            Rp0
+                        </h3>
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card orange-card">
+
+                    <div class="card-icon">
+                        S
+                    </div>
+
+                    <div>
+                        <p>Sisa Anggaran</p>
+                        <h3 id="sisa-anggaran">
+                            Rp0
+                        </h3>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PENGENDALIAN RINGKAS -->
+
+            <div class="content-card">
+
+                <div class="card-header">
+
+                    <div>
+                        <h2>Anggaran vs Realisasi</h2>
+
+                        <p>
+                            Ringkasan pengendalian anggaran bahan
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>No</th>
+                                <th>Bahan</th>
+                                <th>Anggaran</th>
+                                <th>Realisasi</th>
+                                <th>Selisih</th>
+                                <th>% Realisasi</th>
+                                <th>Status</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="dashboard-table">
+
+                            <tr>
+                                <td colspan="7"
+                                    class="empty-state">
+                                    Belum ada data pengendalian.
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             DATA BAHAN
+        ================================================== -->
+
+        <section id="bahan"
+                 class="page">
+
+            <div class="page-header">
+
+                <div>
+                    <h2>Data Bahan</h2>
+
+                    <p>
+                        Kelola data bahan habis pakai salon.
+                    </p>
+                </div>
+
+                <button class="primary-button"
+                        onclick="openBahanForm()">
+                    + Tambah Bahan
+                </button>
+
+            </div>
+
+
+            <!-- FORM BAHAN -->
+
+            <div id="bahan-form"
+                 class="content-card form-card hidden">
+
+                <h3>Tambah Bahan</h3>
+
+                <form id="form-bahan">
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label for="nama-bahan">
+                                Nama Bahan
+                            </label>
+
+                            <input type="text"
+                                   id="nama-bahan"
+                                   placeholder="Contoh: Shampoo"
+                                   required>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="satuan-bahan">
+                                Satuan
+                            </label>
+
+                            <input type="text"
+                                   id="satuan-bahan"
+                                   placeholder="Contoh: Botol"
+                                   required>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="stok-minimum">
+                                Stok Minimum
+                            </label>
+
+                            <input type="number"
+                                   id="stok-minimum"
+                                   min="0"
+                                   step="0.01"
+                                   value="0"
+                                   required>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-actions">
+
+                        <button type="submit"
+                                class="primary-button">
+                            Simpan
+                        </button>
+
+                        <button type="button"
+                                class="secondary-button"
+                                onclick="closeBahanForm()">
+                            Batal
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+
+            <!-- TABLE BAHAN -->
+
+            <div class="content-card">
+
+                <div class="card-header">
+
+                    <div>
+                        <h2>Daftar Bahan</h2>
+
+                        <p>
+                            Daftar bahan habis pakai yang digunakan.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Bahan</th>
+                                <th>Satuan</th>
+                                <th>Stok Minimum</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="bahan-table">
+
+                            <tr>
+                                <td colspan="6"
+                                    class="empty-state">
+                                    Belum ada data bahan.
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             ANGGARAN
+        ================================================== -->
+
+        <section id="anggaran"
+                 class="page">
+
+            <div class="page-header">
+
+                <div>
+                    <h2>Anggaran</h2>
+
+                    <p>
+                        Kelola anggaran pembelian bahan.
+                    </p>
+                </div>
+
+                <button class="primary-button"
+                        onclick="openAnggaranForm()">
+                    + Tambah Anggaran
+                </button>
+
+            </div>
+
+
+            <!-- FORM ANGGARAN -->
+
+            <div id="anggaran-form"
+                 class="content-card form-card hidden">
+
+                <h3>Tambah Anggaran</h3>
+
+                <form id="form-anggaran">
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label for="anggaran-bahan">
+                                Bahan
+                            </label>
+
+                            <select id="anggaran-bahan"
+                                    required>
+
+                                <option value="">
+                                    Pilih bahan
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="periode-anggaran">
+                                Periode
+                            </label>
+
+                            <input type="month"
+                                   id="periode-anggaran"
+                                   required>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="nominal-anggaran">
+                                Nominal Anggaran
+                            </label>
+
+                            <input type="number"
+                                   id="nominal-anggaran"
+                                   min="0"
+                                   step="1000"
+                                   placeholder="Contoh: 2000000"
+                                   required>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="keterangan-anggaran">
+                                Keterangan
+                            </label>
+
+                            <input type="text"
+                                   id="keterangan-anggaran"
+                                   placeholder="Keterangan tambahan">
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-actions">
+
+                        <button type="submit"
+                                class="primary-button">
+                            Simpan
+                        </button>
+
+                        <button type="button"
+                                class="secondary-button"
+                                onclick="closeAnggaranForm()">
+                            Batal
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+
+            <!-- TABLE ANGGARAN -->
+
+            <div class="content-card">
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>No</th>
+                                <th>Bahan</th>
+                                <th>Periode</th>
+                                <th>Anggaran</th>
+                                <th>Keterangan</th>
+                                <th>Aksi</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="anggaran-table">
+
+                            <tr>
+                                <td colspan="6"
+                                    class="empty-state">
+                                    Belum ada data anggaran.
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             PEMBELIAN
+        ================================================== -->
+
+        <section id="pembelian"
+                 class="page">
+
+            <div class="page-header">
+
+                <div>
+                    <h2>Pembelian</h2>
+
+                    <p>
+                        Catat transaksi pembelian bahan salon.
+                    </p>
+                </div>
+
+                <button class="primary-button"
+                        onclick="openPembelianForm()">
+                    + Tambah Pembelian
+                </button>
+
+            </div>
+
+
+            <!-- FORM PEMBELIAN -->
+
+            <div id="pembelian-form"
+                 class="content-card form-card hidden">
+
+                <h3>Tambah Pembelian</h3>
+
+                <form id="form-pembelian">
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label for="tanggal-pembelian">
+                                Tanggal
+                            </label>
+
+                            <input type="date"
+                                   id="tanggal-pembelian"
+                                   required>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="pembelian-bahan">
+                                Bahan
+                            </label>
+
+                            <select id="pembelian-bahan"
+                                    required>
+
+                                <option value="">
+                                    Pilih bahan
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="supplier">
+                                Supplier
+                            </label>
+
+                            <input type="text"
+                                   id="supplier"
+                                   placeholder="Nama supplier">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="qty-pembelian">
+                                Qty
+                            </label>
+
+                            <input type="number"
+                                   id="qty-pembelian"
+                                   min="0.01"
+                                   step="0.01"
+                                   placeholder="Jumlah"
+                                   required>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="harga-satuan">
+                                Harga Satuan
+                            </label>
+
+                            <input type="number"
+                                   id="harga-satuan"
+                                   min="0"
+                                   step="1000"
+                                   placeholder="Harga"
+                                   required>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="total-pembelian">
+                                Total Harga
+                            </label>
+
+                            <input type="text"
+                                   id="total-pembelian"
+                                   value="Rp0"
+                                   readonly>
+
+                        </div>
+
+
+                        <div class="form-group full-width">
+
+                            <label for="keterangan-pembelian">
+                                Keterangan
+                            </label>
+
+                            <input type="text"
+                                   id="keterangan-pembelian"
+                                   placeholder="Keterangan tambahan">
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-actions">
+
+                        <button type="submit"
+                                class="primary-button">
+                            Simpan Pembelian
+                        </button>
+
+                        <button type="button"
+                                class="secondary-button"
+                                onclick="closePembelianForm()">
+                            Batal
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+
+            <!-- TABLE PEMBELIAN -->
+
+            <div class="content-card">
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>No</th>
+                                <th>Tanggal</th>
+                                <th>Bahan</th>
+                                <th>Supplier</th>
+                                <th>Qty</th>
+                                <th>Harga Satuan</th>
+                                <th>Total</th>
+                                <th>Aksi</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="pembelian-table">
+
+                            <tr>
+                                <td colspan="8"
+                                    class="empty-state">
+                                    Belum ada transaksi pembelian.
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             PENGENDALIAN
+        ================================================== -->
+
+        <section id="pengendalian"
+                 class="page">
+
+            <div class="page-header">
+
+                <div>
+                    <h2>Pengendalian Anggaran</h2>
+
+                    <p>
+                        Bandingkan anggaran dengan realisasi pembelian.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="content-card">
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>No</th>
+                                <th>Bahan</th>
+                                <th>Anggaran</th>
+                                <th>Realisasi</th>
+                                <th>Selisih</th>
+                                <th>% Realisasi</th>
+                                <th>Status</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="pengendalian-table">
+
+                            <tr>
+                                <td colspan="7"
+                                    class="empty-state">
+                                    Belum ada data pengendalian.
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             LAPORAN
+        ================================================== -->
+
+        <section id="laporan"
+                 class="page">
+
+            <div class="page-header">
+
+                <div>
+                    <h2>Laporan</h2>
+
+                    <p>
+                        Ringkasan pembelian dan pengendalian anggaran.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="report-grid">
+
+                <div class="content-card report-card">
+
+                    <div class="report-icon pink-icon">
+                        P
+                    </div>
+
+                    <div>
+                        <h3>Laporan Pembelian</h3>
+
+                        <p>
+                            Rekap transaksi pembelian bahan habis pakai.
+                        </p>
+
+                        <button class="secondary-button"
+        onclick="tampilkanLaporanPembelian()">
+    Lihat Laporan
+</button>
+                    </div>
+
+                </div>
+
+
+                <div class="content-card report-card">
+
+                    <div class="report-icon purple-icon">
+                        A
+                    </div>
+
+                    <div>
+                        <h3>Laporan Anggaran</h3>
+
+                        <p>
+                            Rekap anggaran dan realisasi pembelian.
+                        </p>
+
+                        <button class="secondary-button"
+        onclick="tampilkanLaporanAnggaran()">
+    Lihat Laporan
+</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         SUPABASE JAVASCRIPT LIBRARY
+    ====================================================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+    <!-- =====================================================
+         APP.JS
+    ====================================================== -->
+
+    <script src="../BACK-END/app.js"></script>
+
+
+    <!-- =====================================================
+         SCRIPT.JS
+    ====================================================== -->
+
+    <script src="script.js"></script>
+
+</body>
+</html>
